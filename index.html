@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="dark light">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; font-src data:; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; font-src data:; connect-src 'self' https://vitals.vercel-insights.com; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="theme-color" id="themeColor" content="#1e2227">
 <title>Codex Auth · 粘贴 Session 生成 Codex 授权配置</title>
@@ -161,6 +161,14 @@ svg{display:block}
   mask-image:radial-gradient(130% 95% at 50% 0%,#000 18%,transparent 76%);
 }
 
+.xlink{
+  position:absolute;left:clamp(14px,2.2vw,28px);bottom:clamp(12px,1.8vh,20px);
+  display:grid;place-items:center;width:30px;height:30px;border-radius:50%;
+  color:var(--ink-3);opacity:.92;z-index:5;
+  transition:color .25s var(--ease),background-color .25s var(--ease),transform .25s var(--ease);
+}
+.xlink:hover{color:var(--ink);opacity:1;background:var(--wash);transform:translateY(-2px)}
+.xlink svg{width:13.5px;height:13.5px}
 .frame{
   position:relative;z-index:1;
   max-width:1240px;margin:0 auto;
@@ -188,13 +196,13 @@ svg{display:block}
 @keyframes ping{0%{transform:scale(.5);opacity:.6}70%,100%{transform:scale(2);opacity:0}}
 
 .gbtn{
-  display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 13px;
-  border:1px solid var(--rule);border-radius:999px;
+  display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 12px;
+  border:0;border-radius:999px;
   font-size:12.5px;color:var(--ink-2);white-space:nowrap;
-  background:var(--wash);
-  transition:color .25s var(--ease),border-color .25s var(--ease),background-color .25s var(--ease),transform .2s var(--ease);
+  background:transparent;
+  transition:color .25s var(--ease),background-color .25s var(--ease),transform .2s var(--ease);
 }
-.gbtn:hover{color:var(--ink);border-color:var(--ink-4);background:var(--wash-2);transform:translateY(-1px)}
+.gbtn:hover{color:var(--ink);background:var(--wash-2);transform:translateY(-1px)}
 .gbtn:active{transform:scale(.97)}
 .gbtn svg{width:12px;height:12px;transition:transform .3s var(--ease)}
 .gbtn:hover svg{transform:translateX(2px)}
@@ -287,12 +295,12 @@ svg{display:block}
 @keyframes blink{0%,49%{opacity:1}50%,100%{opacity:.06}}
 .we-btns{display:flex;align-items:center;gap:7px;pointer-events:auto}
 .mini{
-  display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 11px;
-  border:1px solid var(--rule);border-radius:999px;background:var(--bg-3);
+  display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 12px;
+  border:0;border-radius:999px;background:var(--wash);
   font-size:11.5px;color:var(--ink-2);
-  transition:border-color .2s,color .2s,transform .18s var(--ease),background-color .2s;
+  transition:color .2s,transform .18s var(--ease),background-color .2s;
 }
-.mini:hover{border-color:var(--accent);color:var(--ink);transform:translateY(-1px)}
+.mini:hover{color:var(--ink);background:var(--wash-2);transform:translateY(-1px)}
 .mini:active{transform:scale(.97)}
 .mini svg{width:12px;height:12px;opacity:.8}
 
@@ -461,7 +469,7 @@ svg{display:block}
 }
 .btn-copy:hover:not(:disabled){filter:brightness(1.08);transform:translateY(-1px)}
 .btn-copy:active:not(:disabled){transform:scale(.985)}
-.btn-copy:disabled{background:transparent;color:var(--ink-4);border:1px solid var(--rule);font-weight:500}
+.btn-copy:disabled{background:var(--wash);color:var(--ink-4);border:0;font-weight:500}
 .btn-copy::after{
   content:'';position:absolute;inset:0;border-radius:inherit;
   box-shadow:0 0 0 0 var(--glow);opacity:0;
@@ -558,12 +566,12 @@ html.theming *::after{
 }
 .pane-bar{flex:0 0 auto;height:56px;display:flex;align-items:center;justify-content:space-between}
 .back{
-  display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 14px;
-  border-radius:999px;border:1px solid var(--rule);color:var(--ink-2);font-size:12.5px;
-  background:var(--wash);
-  transition:color .25s,border-color .25s,transform .3s var(--ease),background-color .25s;
+  display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 12px;
+  border-radius:999px;border:0;color:var(--ink-2);font-size:12.5px;
+  background:transparent;
+  transition:color .25s,transform .3s var(--ease),background-color .25s;
 }
-.back:hover{color:var(--ink);border-color:var(--ink-4);transform:translateX(-3px)}
+.back:hover{color:var(--ink);background:var(--wash-2);transform:translateX(-3px)}
 .back svg{width:13px;height:13px}
 
 .pane-body{flex:1 1 auto;display:flex;flex-direction:column;justify-content:center;min-height:0}
@@ -631,6 +639,8 @@ body.view-guide .frame{transform:scale(.985);opacity:.4}
   :root{--hero:clamp(32px,4.5vw,50px)}
 }
 @media (max-width:940px){
+  .xlink{left:10px;bottom:4px;width:22px;height:22px;opacity:.8}
+  .xlink svg{width:12px;height:12px}
   .frame{grid-template-rows:auto auto;min-height:100dvh;height:auto}
   .bar{height:54px}
   .main{grid-template-columns:minmax(0,1fr);gap:clamp(20px,3vh,28px);padding:clamp(14px,2.6vh,26px) 0 26px}
@@ -639,7 +649,7 @@ body.view-guide .frame{transform:scale(.985);opacity:.4}
   .readout{margin-top:8px}
   .hero{margin-bottom:12px}
   .privacy{margin-top:10px;font-size:11px}
-  .sheet{flex:0 0 auto;height:clamp(250px,36vh,360px);min-height:230px}
+  .sheet{flex:0 0 auto;height:clamp(240px,33vh,352px);min-height:228px}
   .hero .hl2{font-size:.86em}
   .pane-title{font-size:clamp(32px,8vw,48px)}
 }
@@ -800,6 +810,10 @@ body.view-guide .frame{transform:scale(.985);opacity:.4}
 
   </main>
 
+  <a class="xlink" href="https://x.com/woaiwr" target="_blank" rel="noopener noreferrer" aria-label="X · @woaiwr">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+  </a>
+
   <div class="veil" id="veil"></div>
 </div>
 
@@ -857,6 +871,12 @@ setTimeout(function () {
   }
 }, 2600);
 </script>
+
+<!-- Vercel Web Analytics：仅在 Vercel 上生效，其它静态托管会静默 404，不影响功能 -->
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
 
 <script>
 /* ==========================================================================
@@ -1916,10 +1936,6 @@ setTimeout(function () {
     requestAnimationFrame(function () { placeMark(false); });
     window.setTimeout(function () { placeMark(false); }, 300);
     window.addEventListener('resize', function () { placeMark(false); });
-
-    if (window.matchMedia('(pointer:fine)').matches && window.innerWidth > 900) {
-      el.token.focus({ preventScroll: true });
-    }
 
   }
 

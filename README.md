@@ -33,9 +33,10 @@ ChatGPT Session  ──►  浏览器本地解析  ──►  授权配置  ─�
 
 ## 隐私与安全
 
-- **没有任何后端**，也没有统计、埋点、字体或图标 CDN。整个页面只有一个 `index.html`。
+- **没有任何后端**，也没有第三方统计、埋点、字体或图标 CDN。整个页面只有一个 `index.html`。
 - **CSP 兜底**：页面内置 `Content-Security-Policy`，`connect-src` 与 `img-src` 均不放行外部地址。即使页面被注入脚本，也无法把数据发出去（已实测 `fetch` / `Image` 请求均被浏览器拦截）。
-- **零外部请求**：字体与动画全部内联，`performance.getEntriesByType('resource')` 为空数组，断网状态下功能完全一致。
+- **零外部请求**：字体与动画全部内联，断网状态下功能完全一致。
+- **访问量统计**只用了 Vercel Web Analytics（部署在 Vercel 时生效）：同源加载 `/_vercel/insights/script.js`，只记录页面访问量，不写 cookie、不采集输入内容，凭证永远不会进入任何请求。部署在其它静态托管上时该脚本不存在，功能不受影响。
 - **不落盘凭证**：`localStorage` 只记录 `codex-auth-theme`（主题）和 `codex-auth-format`（格式偏好），不保存 token、邮箱或任何账号信息。
 - **唯一外链**是「如何获取」页里的 `chatgpt.com` 地址，需要你主动点击。
 
@@ -49,7 +50,7 @@ ChatGPT Session  ──►  浏览器本地解析  ──►  授权配置  ─�
 4. 选择目标格式，点「复制」或「下载」。
 5. 把内容粘贴到终端执行，或把 JSON 导入对应面板。
 
-> 页面加载后输入框已自动聚焦，直接 `⌘V` / `Ctrl+V` 即可。
+> 输入框不会自动抢焦点，点一下再 `⌘V` / `Ctrl+V`；也可以直接点「从剪贴板」按钮。
 
 ## 本地使用
 
