@@ -33,8 +33,6 @@ ChatGPT Session  ──►  浏览器本地解析  ──►  授权配置  ─�
 
 ## 隐私与安全
 
-这个页面要处理的是账号凭证，所以它被刻意做成了“什么都做不了”的样子：
-
 - **没有任何后端**，也没有统计、埋点、字体或图标 CDN。整个页面只有一个 `index.html`。
 - **CSP 兜底**：页面内置 `Content-Security-Policy`，`connect-src` 与 `img-src` 均不放行外部地址。即使页面被注入脚本，也无法把数据发出去（已实测 `fetch` / `Image` 请求均被浏览器拦截）。
 - **零外部请求**：字体与动画全部内联，`performance.getEntriesByType('resource')` 为空数组，断网状态下功能完全一致。
@@ -63,42 +61,6 @@ ChatGPT Session  ──►  浏览器本地解析  ──►  授权配置  ─�
 python3 -m http.server 8080
 # 然后访问 http://localhost:8080
 ```
-
-## 部署到 Vercel（推荐）
-
-纯静态、零构建，导入即用，仓库可以是私有：
-
-1. 把目录推到 GitHub（下面的命令通用）
-2. 打开 <https://vercel.com/new>，Import 该仓库
-3. Framework Preset 选 **Other**，Build Command 与 Output Directory 全部留空
-4. Deploy，几十秒后得到 `https://<项目名>.vercel.app`
-
-根目录的 `vercel.json` 已经配好真实 HTTP 响应头（CSP、`X-Frame-Options: DENY`、`Referrer-Policy: no-referrer`、`nosniff`、HSTS），比只靠 `<meta>` 更严格，也防止页面被别站 iframe 套壳。之后每次 push 自动重新部署，PR 还会生成独立预览地址。
-
-## 部署到 GitHub Pages（备选）
-
-仓库根目录需要有 `index.html`（本目录已经是这个结构）。
-
-```bash
-cd codex-auth
-git init
-git add .
-git commit -m "feat: codex auth single-file tool"
-git branch -M main
-git remote add origin https://github.com/<你的用户名>/<仓库名>.git
-git push -u origin main
-```
-
-然后在 GitHub 仓库里：
-
-1. **Settings → Pages**
-2. **Source** 选择 `Deploy from a branch`
-3. **Branch** 选择 `main`，目录选 `/ (root)`，保存
-4. 等一两分钟，访问 `https://<你的用户名>.github.io/<仓库名>/`
-
-仓库需要是 **public** 才能使用免费的 GitHub Pages。若使用自定义域名，在仓库根目录添加 `CNAME` 文件，内容为你的域名。
-
-`.nojekyll` 已经包含在内，避免 GitHub Pages 用 Jekyll 处理静态文件。
 
 ## 关于过期时间
 
